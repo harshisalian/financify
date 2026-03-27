@@ -3,7 +3,6 @@
 
 -- Add password column to existing users table
 ALTER TABLE public.users ADD COLUMN IF NOT EXISTS password text;
-ALTER TABLE public.users ADD COLUMN IF NOT EXISTS created_at timestamptz DEFAULT now();
 
 -- Update existing users with default passwords (optional)
 UPDATE public.users 
@@ -12,8 +11,8 @@ WHERE password IS NULL;
 
 -- Add indexes for better performance
 CREATE INDEX IF NOT EXISTS idx_users_role ON public.users(role);
-CREATE INDEX IF NOT EXISTS idx_users_is_active ON public.users(isActive);
-CREATE INDEX IF NOT EXISTS idx_users_created_at ON public.users(created_at);
+CREATE INDEX IF NOT EXISTS idx_users_is_active ON public.users("isActive");
+CREATE INDEX IF NOT EXISTS idx_users_created_at ON public.users("createdAt");
 
 -- Optional: Add RLS policies for user management
 -- ALTER TABLE public.users ENABLE ROW LEVEL SECURITY;
